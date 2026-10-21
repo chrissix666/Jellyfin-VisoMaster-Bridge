@@ -16,7 +16,12 @@
 
 So I built VisoMaster Bridge. It connects Jellyfin's video player to VisoMaster Fusion: you find the faces in the film, pick the faces you want instead, and switch the swap on. The film keeps playing in Jellyfin, with Jellyfin's sound, and only the picture comes from VisoMaster Fusion.
 
-I have developed many Jellyfin Web script mods over the years, but besides this one, only four other true plugins: [ArtworkPlus](https://github.com/chrissix666/Jellyfin-ArtworkPlus), which shows the artwork Jellyfin leaves unused, [Cinema Project](https://github.com/chrissix666/Jellyfin-Cinema-Project), a virtual cinema environment based on three.js that gives your movies an ambient feel, [VideoOSD Tweaks and Candy](https://github.com/chrissix666/Jellyfin-VideoOSD-Tweaks-Candy), which puts you in full control of the Jellyfin video player OSD, and [Destroy](https://github.com/chrissix666/Jellyfin-Destroy), which turns the Jellyfin page you are looking at into a game level.
+Please also have a look at my other plugins:
+
+- [ArtworkPlus](https://github.com/chrissix666/Jellyfin-ArtworkPlus): shows the artwork Jellyfin leaves unused
+- [Cinema Project](https://github.com/chrissix666/Jellyfin-Cinema-Project): a virtual cinema environment based on three.js that gives your movies an ambient feel
+- [VideoOSD Tweaks and Candy](https://github.com/chrissix666/Jellyfin-VideoOSD-Tweaks-Candy): puts you in full control of the Jellyfin video player OSD
+- [Destroy](https://github.com/chrissix666/Jellyfin-Destroy): turns the Jellyfin page you are looking at into a game level
 
 ---
 
