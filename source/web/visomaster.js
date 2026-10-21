@@ -1198,7 +1198,7 @@
         var host = document.querySelector('.videoPlayerContainer');
         if (!host) { return; }
         if (!noticeEl || !noticeEl.isConnected) { noticeEl = el('div', 'vmNotice'); host.appendChild(noticeEl); }
-        var header = document.querySelector('.osdHeader');
+        var header = [].filter.call(document.querySelectorAll('.osdHeader'), function (h) { return h.getBoundingClientRect().height > 0; })[0];
         if (header) {
             var top = Math.round(header.getBoundingClientRect().bottom - host.getBoundingClientRect().top);
             if (top > 0 && noticeEl.style.top !== top + 'px') { noticeEl.style.top = top + 'px'; }
