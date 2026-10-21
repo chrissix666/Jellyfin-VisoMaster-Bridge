@@ -106,6 +106,10 @@ Pick a target face tile, open **Input Faces**, pick one or more input faces, and
 
 Nothing is stored. Faces, choices and presets last as long as the player is open.
 
+<img src="images/menu-showcase.jpg" width="100%" alt="VisoMaster Bridge menu in the video player">
+
+<sub>The VisoMaster button (framed) and its menu, connected, before a swap.</sub>
+
 ---
 
 ### Input Faces
