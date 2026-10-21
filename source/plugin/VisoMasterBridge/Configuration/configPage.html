@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VisoMaster Bridge</title>
+</head>
+<body>
+<div id="VisoMasterBridgeConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-button,emby-select,emby-checkbox">
+<div data-role="content"><div class="content-primary">
+<style>
+    #VisoMasterBridgeConfigPage { font-size: 14.888889px; color: #ccc; background: #101010; }
+    #VisoMasterBridgeConfigPage h2 { font-size: 1.5em; font-weight: 400; margin: .3em 0 .6em; color: #fff; }
+    #VisoMasterBridgeConfigPage h3 { font-size: 1.17em; font-weight: 400; color: #fff; }
+    #VisoMasterBridgeConfigPage .vmTabHeaderRow { display: flex; justify-content: space-between; align-items: center; }
+    #VisoMasterBridgeConfigPage .vmTabHeaderRow h3 { margin: 0; }
+    #VisoMasterBridgeConfigPage .vmTabDescArea { min-height: 60px; padding-top: 4px; }
+    #VisoMasterBridgeConfigPage .vmTabDescArea .vmDesc { padding: 0; }
+    #VisoMasterBridgeConfigPage .vmRow { display: grid; grid-template-columns: 246px 1fr; align-items: center; padding: 2px 0;
+        border-top: 1px solid rgba(255,255,255,0.08); column-gap: 8px; row-gap: 0; }
+    #VisoMasterBridgeConfigPage .vmRowLabelSpan { grid-column: 1; grid-row: 1 / 3; align-self: center; }
+    #VisoMasterBridgeConfigPage .vmRowMerged .vmDesc { grid-row: 2; grid-column: 1 / -1; margin: 0; }
+    #VisoMasterBridgeConfigPage .vmRowMerged > select,
+    #VisoMasterBridgeConfigPage .vmRowMerged > input,
+    #VisoMasterBridgeConfigPage .vmRowMerged > div:not(.vmDesc) { grid-row: 1 !important; grid-column: 2 !important; }
+    #VisoMasterBridgeConfigPage .vmDesc { font-size: 10.5px; line-height: 14px; min-height: 14px; color: #777; padding: 4px 0 1px 254px;
+        white-space: normal; overflow-wrap: break-word; }
+    #VisoMasterBridgeConfigPage .vmTextCompact, #VisoMasterBridgeConfigPage .vmNumberCompact {
+        max-width: 320px; width: 100%; box-sizing: border-box; height: 30px; background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.2); border-radius: 3px; color: inherit; padding: 0 8px; font-size: 13px; font-family: inherit; }
+    #VisoMasterBridgeConfigPage .vmTextCompact { max-width: 100%; }
+    #VisoMasterBridgeConfigPage .vmNumberCompact { max-width: 143px; text-align: left; }
+    #VisoMasterBridgeConfigPage .vmRow.vmRowCheckbox { height: 46px; padding: 2px 0; }
+    #VisoMasterBridgeConfigPage .vmDescInline { font-size: 10.5px; color: #777; display: inline-flex; align-items: center; line-height: normal; }
+    #VisoMasterBridgeConfigPage .checkboxContainer { grid-column: 2 !important; justify-self: start !important; margin: 0 !important; }
+    #VisoMasterBridgeConfigPage .emby-checkbox-label { display: flex; align-items: center; gap: 10px; margin: 0; padding: 0 !important; height: 30px !important; cursor: pointer; }
+    #VisoMasterBridgeConfigPage .vmRowCheckbox input[type=checkbox] { -webkit-appearance: none; appearance: none; position: relative; width: 16px; height: 16px;
+        margin: 0; border: 0.14em solid currentColor; border-radius: 3px; background: transparent; cursor: pointer; flex-shrink: 0; }
+    #VisoMasterBridgeConfigPage .vmRowCheckbox input[type=checkbox]:checked { background: #00a4dc; border-color: #00a4dc; }
+    #VisoMasterBridgeConfigPage .vmRowCheckbox input[type=checkbox]:checked::after { content: ""; position: absolute; left: 4px; top: 0; width: 4px; height: 8px;
+        border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+    #VisoMasterBridgeConfigPage .vmSelectCompact { max-width: 320px; width: 100%; box-sizing: border-box; height: 30px; background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.2); border-radius: 3px; color: inherit; padding: 0 8px; font-size: 13px; font-family: inherit; }
+    #VisoMasterBridgeConfigPage .vmSelectCompact option { background: #1c1c1c; color: #eee; }
+    #VisoMasterBridgeConfigPage .vmTextCompact:focus, #VisoMasterBridgeConfigPage .vmNumberCompact:focus { outline: none; border-color: #00a4dc; }
+    #VisoMasterBridgeConfigPage .vmWorkerStatus { font-size: 10.5px; line-height: 14px; min-height: 14px; color: #999; padding: 4px 0 6px 254px; }
+    #VisoMasterBridgeConfigPage .vmActionBtn { display: inline-block !important; box-sizing: border-box !important; padding: 0 !important; font-size: 12px !important;
+        font-weight: normal !important; font-family: inherit !important; border: 1px solid rgba(255,255,255,0.25) !important; border-radius: 3px !important;
+        background: rgba(255,255,255,0.08) !important; color: #eee !important; cursor: pointer !important; width: 112px !important; height: 29px !important;
+        line-height: 27px !important; text-align: center !important; margin: 0 !important; }
+    #VisoMasterBridgeConfigPage .vmActionBtn:hover { background: rgba(255,255,255,0.18) !important; }
+    #VisoMasterBridgeConfigPage button.vmAccentBtn { background: #00a4dc; border-color: #00a4dc; color: #fff; }
+    #VisoMasterBridgeConfigPage button.vmAccentBtn:hover { background: #0090c2; }
+    #VisoMasterBridgeConfigPage .vmExportImportBox { max-width: 54em; margin: 20px 0 0; padding: 16px 0 0; border-top: 1px solid rgba(255,255,255,0.15); }
+    #VisoMasterBridgeConfigPage .vmIeHeading { margin: 0 0 10px; font-size: 14px; font-weight: 500; }
+    #VisoMasterBridgeConfigPage .vmCodeArea { display: block; width: 100%; height: 70px; background: #1c1c1c; border: 1px solid #333; border-radius: 4px; color: #ccc;
+        font-family: monospace; font-size: 11px; line-height: 1.4; padding: 8px; box-sizing: border-box; resize: vertical; margin-bottom: 10px; }
+    #VisoMasterBridgeConfigPage .vmCodeArea:focus { outline: none; border-color: #00a4dc; }
+    #VisoMasterBridgeConfigPage .vmIeButtonRow { display: flex; gap: 8px; width: 100%; flex-wrap: wrap; }
+    #VisoMasterBridgeConfigPage .vmIeButtonRow button { flex: 1; min-width: 120px; text-align: center; justify-content: center; font-size: 12.5px; padding: 8px 4px; }
+    #VisoMasterBridgeConfigPage .vmIeButtonRow .vmIeBtnCopy { background: #2a2a2a; color: #ddd; }
+    #VisoMasterBridgeConfigPage .vmIeButtonRow .vmIeBtnCopy:disabled { opacity: .5; cursor: default; }
+    #VisoMasterBridgeConfigPage .vmIeBtnImport { background: #3a1f1f !important; border: 1px solid #6b3535 !important; color: #e0a0a0 !important; }
+    #VisoMasterBridgeConfigPage .vmIeStatus { font-size: 10.5px; min-height: 14px; margin-top: 8px; }
+    #VisoMasterBridgeConfigPage .vmIeStatus.vmIeSuccess { color: #6dcf6d; }
+    #VisoMasterBridgeConfigPage .vmIeStatus.vmIeError { color: #e07a7a; }
+    #VisoMasterBridgeConfigPage .content-primary { container-type: inline-size; container-name: vmpage; }
+    @container vmpage (max-width: 803.98px) {
+        #VisoMasterBridgeConfigPage .vmRow { grid-template-columns: minmax(0, 1fr); row-gap: 4px; padding: 6px 0; }
+        #VisoMasterBridgeConfigPage .vmRowLabelSpan { grid-column: 1; grid-row: 1; }
+        #VisoMasterBridgeConfigPage .vmRowMerged > select,
+        #VisoMasterBridgeConfigPage .vmRowMerged > input,
+        #VisoMasterBridgeConfigPage .vmRowMerged > div:not(.vmDesc) { grid-row: 2 !important; grid-column: 1 !important; }
+        #VisoMasterBridgeConfigPage .vmRowMerged .vmDesc { grid-row: 3; }
+        #VisoMasterBridgeConfigPage .vmDesc, #VisoMasterBridgeConfigPage .vmWorkerStatus { padding-left: 0; }
+        #VisoMasterBridgeConfigPage .vmTabHeaderRow { flex-wrap: wrap; gap: 6px; }
+        #VisoMasterBridgeConfigPage .vmRow.vmRowCheckbox { height: auto; }
+        #VisoMasterBridgeConfigPage .vmRow.vmRowCheckbox > .checkboxContainer { grid-column: 1 !important; }
+        #VisoMasterBridgeConfigPage .emby-checkbox-label { height: auto !important; min-height: 30px; align-items: flex-start; }
+        #VisoMasterBridgeConfigPage .emby-checkbox-label input[type=checkbox] { margin-top: 2px; }
+    }
+</style>
+<form id="VisoMasterBridgeConfigForm">
+    <h2>VisoMaster Bridge</h2>
+
+    <div class="vmTabHeaderRow"><h3>Settings</h3><button type="button" is="emby-button" class="raised vmActionBtn emby-button" id="vmRestoreBtn">Restore defaults</button></div>
+    <div class="vmTabDescArea"><div class="vmDesc">VisoMaster Bridge connects the video player to VisoMaster Fusion and swaps faces in the playing video.</div></div>
+
+    <div class="vmRow vmRowCheckbox"><label for="Enabled">Enable VisoMaster</label>
+        <div class="checkboxContainer"><label class="emby-checkbox-label"><input id="Enabled" name="Enabled" type="checkbox"><span class="vmDescInline">Shows the VisoMaster button in the video player; off hides it and stops the worker.</span></label></div></div>
+    <div class="vmRow vmRowMerged"><label class="vmRowLabelSpan" for="VisoMasterPath">VisoMaster Path</label>
+        <input id="VisoMasterPath" name="VisoMasterPath" type="text" class="vmTextCompact" spellcheck="false" autocomplete="off">
+        <div class="vmDesc">Root folder of the portable VisoMaster Fusion install.</div></div>
+    <div class="vmRow vmRowMerged"><label class="vmRowLabelSpan" for="InputFacesFolder">Input Faces Folder</label>
+        <input id="InputFacesFolder" name="InputFacesFolder" type="text" class="vmTextCompact" spellcheck="false" autocomplete="off">
+        <div class="vmDesc">Folder with the input face photos; without it no input faces can be picked.</div></div>
+    <div class="vmRow vmRowMerged"><label class="vmRowLabelSpan" for="InputFacesVisibleTo">Input Faces Visible To</label>
+        <select is="emby-select" id="InputFacesVisibleTo" name="InputFacesVisibleTo" class="emby-select-withcolor emby-select vmSelectCompact"><option value="Everyone">Everyone</option><option value="Administrators">Administrators</option></select>
+        <div class="vmDesc">Who may see and pick the photos in the input faces folder.</div></div>
+    <div class="vmRow vmRowMerged" id="vmButtonPositionRow"><label class="vmRowLabelSpan" for="ButtonPosition">Button Position</label>
+        <select is="emby-select" id="ButtonPosition" name="ButtonPosition" class="emby-select-withcolor emby-select vmSelectCompact"><option value="Favorite">Left of Favorite</option><option value="Subtitles">Left of Subtitles</option><option value="Audio">Left of Audio</option></select>
+        <div class="vmDesc" id="vmButtonPositionDesc">Where the VisoMaster button sits in the player's bottom bar.</div></div>
+    <div class="vmRow vmRowCheckbox"><label for="HideOnNarrowWindow">Hide on Narrow Window</label>
+        <div class="checkboxContainer"><label class="emby-checkbox-label"><input id="HideOnNarrowWindow" name="HideOnNarrowWindow" type="checkbox"><span class="vmDescInline">Automatically hides this below a 50em window width, matching Jellyfin's own vanilla behavior.</span></label></div></div>
+    <div class="vmRow vmRowMerged"><label class="vmRowLabelSpan" for="WorkerPort">Worker Port</label>
+        <input id="WorkerPort" name="WorkerPort" type="text" inputmode="numeric" data-numeric="true" class="vmNumberCompact">
+        <div class="vmDesc">Local port of the VisoMaster worker; it listens on 127.0.0.1 only.</div></div>
+    <div class="vmRow vmRowMerged"><label class="vmRowLabelSpan" for="IdleMinutes">Stop Worker After</label>
+        <input id="IdleMinutes" name="IdleMinutes" type="text" inputmode="numeric" data-numeric="true" class="vmNumberCompact">
+        <div class="vmDesc">Safety net: minutes without use after which the worker stops, even if nobody disconnected.</div></div>
+    <div class="vmWorkerStatus" id="vmWorkerStatus">Worker: unknown</div>
+
+    <div class="vmExportImportBox">
+        <h3 class="vmIeHeading">Backup / restore via code</h3>
+        <textarea id="vmCodeBox" class="vmCodeArea" placeholder="Click &quot;Generate&quot; to create a backup code, or paste a previously saved one here to restore it."></textarea>
+        <div class="vmIeButtonRow">
+            <button type="button" is="emby-button" id="vmGenerateBtn" class="block emby-button vmAccentBtn">Generate</button>
+            <button type="button" is="emby-button" id="vmCopyBtn" class="block emby-button vmIeBtnCopy" disabled>Copy to clipboard</button>
+            <button type="button" is="emby-button" id="vmImportBtn" class="block emby-button vmIeBtnImport">Import</button>
+            <button type="button" is="emby-button" id="vmSaveAllBtn" class="block emby-button vmAccentBtn">Save all settings</button>
+        </div>
+        <div id="vmIeStatus" class="vmIeStatus"></div>
+    </div>
+    <div style="margin-top: 10px;">
+        <button is="emby-button" type="submit" class="raised button-submit block emby-button vmAccentBtn"><span>Save</span></button>
+    </div>
+</form>
+</div></div>
+
+<script type="text/javascript">
+(function () {
+    var VisoMasterBridgeConfig = { pluginUniqueId: '7b42d798-43f7-4289-83e8-64d82b312ac3' };
+    var page = document.querySelector('#VisoMasterBridgeConfigPage:not([data-vm-wired])') || document.querySelector('#VisoMasterBridgeConfigPage');
+    page.setAttribute('data-vm-wired', '1');
+    var VM_FIELDS = {
+        Enabled: { type: 'bool', label: 'Enable VisoMaster', def: true },
+        VisoMasterPath: { type: 'text', label: 'VisoMaster Path', def: '' },
+        InputFacesFolder: { type: 'text', label: 'Input Faces Folder', def: '' },
+        InputFacesVisibleTo: { type: 'select', label: 'Input Faces Visible To', def: 'Everyone', options: ['Everyone', 'Administrators'] },
+        ButtonPosition: { type: 'select', label: 'Button Position', def: 'Favorite', options: ['Favorite', 'Subtitles', 'Audio'] },
+        HideOnNarrowWindow: { type: 'bool', label: 'Hide on Narrow Window', def: true },
+        WorkerPort: { type: 'number', label: 'Worker Port', def: 8766, min: 1024, max: 65535 },
+        IdleMinutes: { type: 'number', label: 'Stop Worker After', def: 15, min: 1, max: 240 }
+    };
+    var $ = function (id) { return page.querySelector('#' + id); };
+    function setField(id, v) { if (VM_FIELDS[id].type === 'bool') { $(id).checked = v === true || v === 'true'; return; } $(id).value = v === undefined || v === null ? '' : String(v); }
+    function getField(id) {
+        var f = VM_FIELDS[id];
+        if (f.type === 'bool') return $(id).checked;
+        var s = $(id).value.trim();
+        if (f.type !== 'number') return s;
+        return /^\d+$/.test(s) ? parseInt(s, 10) : NaN;
+    }
+    function validValue(id, v) {
+        var f = VM_FIELDS[id];
+        if (f.type === 'text') return typeof v === 'string';
+        if (f.type === 'bool') return typeof v === 'boolean';
+        if (f.type === 'select') return f.options.indexOf(v) >= 0;
+        if (f.type === 'number') return typeof v === 'number' && Math.floor(v) === v && v >= f.min && v <= f.max;
+        return false;
+    }
+    function restoreDefaults() { Object.keys(VM_FIELDS).forEach(function (k) { setField(k, VM_FIELDS[k].def); }); }
+    function problem(k) {
+        var f = VM_FIELDS[k];
+        if (f.type === 'number') return f.label + ' must be a whole number from ' + f.min + ' to ' + f.max + '.';
+        if (f.type === 'select') return f.label + ' must be one of: ' + f.options.join(', ') + '.';
+        return f.label + ' is not valid.';
+    }
+
+    $('vmRestoreBtn').addEventListener('click', restoreDefaults);
+
+    function workerStatus() {
+        var el = $('vmWorkerStatus');
+        ApiClient.getJSON(ApiClient.getUrl('VisoMasterBridge/Status')).then(function (s) {
+            if (!s || typeof s !== 'object') throw new Error('bad status');
+            el.textContent = 'Worker: ' + (s.message ? String(s.message) : (s.running ? 'running' : 'stopped'));
+        }).catch(function () { el.textContent = 'Worker: unknown'; });
+    }
+
+    function status(t, ok) { var s = $('vmIeStatus'); s.textContent = t; s.className = 'vmIeStatus ' + (ok ? 'vmIeSuccess' : 'vmIeError'); }
+    $('vmGenerateBtn').addEventListener('click', function () {
+        var o = {}, bad = [];
+        Object.keys(VM_FIELDS).forEach(function (k) { var v = getField(k); if (validValue(k, v)) o[k] = v; else bad.push(k); });
+        if (bad.length) { status('Fix these values first: ' + bad.map(function (k) { return VM_FIELDS[k].label; }).join(', ') + '.', false); return; }
+        $('vmCodeBox').value = btoa(unescape(encodeURIComponent(JSON.stringify(o)))); $('vmCopyBtn').disabled = false; status('Backup code generated.', true);
+    });
+    $('vmCopyBtn').addEventListener('click', function () {
+        var box = $('vmCodeBox'), text = box.value; box.focus(); box.select();
+        var legacy = function () { var ok = false; try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+            if (ok) status('Copied to clipboard.', true); else status('Copying is blocked here - the code is selected, press Ctrl+C.', false); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { status('Copied to clipboard.', true); }, legacy);
+        else legacy();
+    });
+    $('vmImportBtn').addEventListener('click', function () {
+        var o; try { o = JSON.parse(decodeURIComponent(escape(atob($('vmCodeBox').value.trim())))); } catch (e) { o = null; }
+        if (!o || typeof o !== 'object') { status('This is not a valid backup code.', false); return; }
+        var n = 0, bad = [];
+        Object.keys(o).forEach(function (k) { if (!VM_FIELDS.hasOwnProperty(k)) return; if (validValue(k, o[k])) { setField(k, o[k]); n++; } else bad.push(k); });
+        if (bad.length) status('Applied ' + n + ' settings; not allowed, kept as they were: ' + bad.map(function (k) { return VM_FIELDS[k].label; }).join(', ') + '. Click Save to keep them.', false);
+        else status('Applied ' + n + ' settings. Click Save to keep them.', true);
+    });
+    $('vmSaveAllBtn').addEventListener('click', function () { $('VisoMasterBridgeConfigForm').requestSubmit(); });
+
+    function load() {
+        Dashboard.showLoadingMsg();
+        ApiClient.getPluginConfiguration(VisoMasterBridgeConfig.pluginUniqueId).then(function (config) {
+            Object.keys(VM_FIELDS).forEach(function (k) { var v = config[k]; setField(k, v === undefined || v === null || (VM_FIELDS[k].type === 'select' && VM_FIELDS[k].options.indexOf(v) < 0) ? VM_FIELDS[k].def : v); });
+            Dashboard.hideLoadingMsg();
+        }).catch(function () { Dashboard.hideLoadingMsg(); Dashboard.alert('Loading the settings failed.'); });
+        workerStatus();
+        videoOsdOverride();
+    }
+
+    function videoOsdOverride() {
+        var sel = $('ButtonPosition'), desc = $('vmButtonPositionDesc'), row = $('vmButtonPositionRow');
+        var plain = 'Where the VisoMaster button sits in the player\'s bottom bar.';
+        var set = function (byVideoOsd) {
+            sel.disabled = byVideoOsd; row.style.opacity = byVideoOsd ? '.5' : '';
+            desc.textContent = byVideoOsd ? 'Position set by VideoOSD Tweaks & Candy.' : plain;
+        };
+        fetch(ApiClient.getUrl('VideoOSDTweaksCandy/ClientConfiguration'), { headers: { 'Authorization': 'MediaBrowser Token="' + ApiClient.accessToken() + '"' } })
+            .then(function (r) { set(r.status === 200); }, function () { set(false); });
+    }
+    page.addEventListener('pageshow', load);
+    $('VisoMasterBridgeConfigForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var bad = Object.keys(VM_FIELDS).filter(function (k) { return !validValue(k, getField(k)); });
+        if (bad.length) {
+            Dashboard.alert(bad.map(problem).join(' '));
+            return false;
+        }
+        Dashboard.showLoadingMsg();
+        ApiClient.getPluginConfiguration(VisoMasterBridgeConfig.pluginUniqueId).then(function (config) {
+            Object.keys(VM_FIELDS).forEach(function (k) { config[k] = getField(k); });
+            return ApiClient.updatePluginConfiguration(VisoMasterBridgeConfig.pluginUniqueId, config);
+        }).then(function (result) { Dashboard.processPluginConfigurationUpdateResult(result); workerStatus(); })
+          .catch(function () { Dashboard.hideLoadingMsg(); Dashboard.alert('Saving the settings failed.'); });
+        return false;
+    });
+})();
+</script>
+</div>
+</body>
+</html>
